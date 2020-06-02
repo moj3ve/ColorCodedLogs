@@ -65,7 +65,7 @@
 @end
 
 @interface MPRecentsTableViewCell (iOS13)
-@property (nonatomic,retain) NUIContainerStackView * titleStackView; 
+@property (nonatomic,retain) NUIContainerStackView * titleStackView;
 @end
 
 // end iOS 13
@@ -103,14 +103,14 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 
 		if (callInfo.type == 1 || callInfo.type == 4) {
 			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
-		} else 
+		} else
 
 		if (callInfo.type == 2 || callInfo.type == 16) {
 			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
 			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
 		}
-	}	
+	}
 }
 
 
@@ -124,7 +124,7 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 %hook PHRecentsViewController
 -(void)tableView:(UITableView*)arg1 willDisplayCell:(PHRecentsCell*)arg2 forRowAtIndexPath:(NSIndexPath*)arg3 {
 	%orig;
-	
+
 	if(kEnabled) {
 
 		UILabel *nameLabel = MSHookIvar<UILabel *>(arg2, "_callerNameLabel");
@@ -156,7 +156,7 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 
 -(id)tableView:(id)arg1 cellForRowAtIndexPath:(id)arg2 {
 	MPRecentsTableViewCell *orig = %orig;
-	
+
 	if(kEnabled) {
 
 		UILabel *nameLabel = [orig callerNameLabel];
@@ -228,20 +228,25 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 	if(kEnabled) {
 
 		UILabel *nameLabel = orig.titleStackView.arrangedSubviews[0];
+		UILabel *callCountLabel = orig.titleStackView.arrangedSubviews[1];
+
 		CHRecentCall *callInfo = [self recentCallAtTableViewIndex:arg2.row];
 
 		//incoming call : 1
 		//answered elsewhere (another device) : 4
 		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
 			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
+			[callCountLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 		} else
 
 		//outgoing call : 2
 		//outgoing but cancelled : 16
 		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
 			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
+			[callCountLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
 			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
+			[callCountLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 		}
 	}
 
