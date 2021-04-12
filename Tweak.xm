@@ -244,6 +244,8 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
 			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 			[callCountLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
+			//MSHookIvar<UIImageView*>(orig,"_callTypeIconView").image = [MSHookIvar<UIImageView*>(orig,"_callTypeIconView").image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+			[MSHookIvar<UIImageView*>(orig,"_callTypeIconView") setTintColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
 			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 			[callCountLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
