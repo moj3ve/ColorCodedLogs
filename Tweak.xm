@@ -23,9 +23,9 @@
 
 #define prefPath @"/User/Library/Preferences/org.thebigboss.elite.plist"
 
-#define defaultIncomingColor @"#24579c"
-#define defaultOutgoingColor @"#007D00"
-#define defaultMissedColor @"#DA0000"
+#define defaultIncomingColor @"#20BAFD"
+#define defaultOutgoingColor @"#00C20B"
+#define defaultMissedColor @"#FF6C5B"
 
 @interface CHRecentCall : NSObject
 @property unsigned int callStatus;
@@ -66,6 +66,7 @@
 
 @interface MPRecentsTableViewCell (iOS13)
 @property (nonatomic,retain) NUIContainerStackView * titleStackView;
+@property (nonatomic,retain) NUIContainerStackView * subtitleStackView;
 @end
 
 // end iOS 13
@@ -230,6 +231,8 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		UILabel *nameLabel = orig.titleStackView.arrangedSubviews[0];
 		UILabel *callCountLabel = orig.titleStackView.arrangedSubviews[1];
 
+		UILabel *subtitleLabel = orig.subtitleStackView.arrangedSubviews[orig.subtitleStackView.arrangedSubviews.count - 1];
+
 		CHRecentCall *callInfo = [self recentCallAtTableViewIndex:arg2.row];
 
 		//incoming call : 1
@@ -237,6 +240,8 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
 			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 			[callCountLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
+			[subtitleLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
+			[MSHookIvar<UIImageView*>(orig,"_verifiedBadgeView") setTintColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 		} else
 
 		//outgoing call : 2
@@ -244,11 +249,14 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
 			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 			[callCountLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
+			[subtitleLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 			//MSHookIvar<UIImageView*>(orig,"_callTypeIconView").image = [MSHookIvar<UIImageView*>(orig,"_callTypeIconView").image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 			[MSHookIvar<UIImageView*>(orig,"_callTypeIconView") setTintColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
 			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 			[callCountLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
+			[subtitleLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
+			[MSHookIvar<UIImageView*>(orig,"_verifiedBadgeView") setTintColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 		}
 	}
 

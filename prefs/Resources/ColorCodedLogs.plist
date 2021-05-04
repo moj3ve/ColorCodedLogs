@@ -39,7 +39,7 @@
                 <key>key</key>
                 <string>incomingCall</string>
                 <key>fallback</key>
-                <string>24579C</string>
+                <string>20BAFD</string>
                 <key>PostNotification</key>
                 <string>org.thebigboss.elite/settingsChanged</string>
                 <key>alpha</key>
@@ -61,7 +61,7 @@
                 <key>key</key>
                 <string>outgoingCall</string>
                 <key>fallback</key>
-                <string>007D00</string>
+                <string>00C20B</string>
                 <key>PostNotification</key>
                 <string>org.thebigboss.elite/settingsChanged</string>
                 <key>alpha</key>
@@ -83,7 +83,7 @@
                 <key>key</key>
                 <string>missedCall</string>
                 <key>fallback</key>
-                <string>DA0000</string>
+                <string>FF6C5B</string>
                 <key>PostNotification</key>
                 <string>org.thebigboss.elite/settingsChanged</string>
                 <key>alpha</key>
